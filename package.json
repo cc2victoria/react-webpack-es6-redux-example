@@ -44,6 +44,7 @@
     "ftp": "^0.3.10",
     "glob": "^7.1.1",
     "html-webpack-plugin": "^2.24.1",
+    "node-sass": "^4.1.1",
     "postcss-loader": "^1.2.1",
     "precss": "^1.4.0",
     "sass-loader": "^4.1.1",

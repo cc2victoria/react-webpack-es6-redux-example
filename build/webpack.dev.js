@@ -57,6 +57,7 @@ new WebpackDevServer(webpack(config), {
   hot: hot,
   inline: true,
   compress: true,
+  quiet: true,
   stats: {
     chunks: false,
     children: false,
@@ -68,6 +69,3 @@ new WebpackDevServer(webpack(config), {
 }).listen(PORT, HOST, function() {
   console.log(localPublicPath);
 });
-
-
-

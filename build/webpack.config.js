@@ -3,20 +3,21 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var WebpackMd5Hash = require('webpack-md5-hash');
 var HashedModuleIdsPlugin = require('./HashedModuleIdsPlugin');
 
+// webpack 命令控制台
+var Dashboard = require('webpack-dashboard');
+var DashboardPlugin = require('webpack-dashboard/plugin');
+var dashboard = new Dashboard();
+
+
 // 辅助函数
 var utils = require('./utils');
 var fullPath  = utils.fullPath;
 var pickFiles = utils.pickFiles;
 
-// 项目根路径
-var ROOT_PATH = fullPath('../');
-// 项目源码路径
-var SRC_PATH = ROOT_PATH + '/src';
-// 产出路径
-var DIST_PATH = ROOT_PATH + '/dist';
-
-// node_modules
-var NODE_MODULES_PATH =  ROOT_PATH + '/node_modules';
+var ROOT_PATH = fullPath('../');                       // 项目根路径
+var SRC_PATH = ROOT_PATH + '/src';                     // 项目源码路径
+var DIST_PATH = ROOT_PATH + '/dist';                   // 产出路径
+var NODE_MODULES_PATH =  ROOT_PATH + '/node_modules';  // node_modules 路径
 
 var __DEV__ = process.env.NODE_ENV !== 'production';
 
@@ -90,11 +91,12 @@ var config = {
       names: ['lib', 'manifest']
     }),
     // 使用文件名替换数字作为模块ID
-    // new webpack.NamedModulesPlugin(),
+    new webpack.NamedModulesPlugin(),
     // 使用 hash 作模块 ID，文件名作ID太长了，文件大小剧增
     new HashedModuleIdsPlugin(),
     // 根据文件内容生成 hash
-    new WebpackMd5Hash()
+    new WebpackMd5Hash(),
+    new DashboardPlugin(dashboard.setData)     // webpack 命令控制台
   ]
 };
 
@@ -138,7 +140,7 @@ config.postcss = function() {
 config.module.loaders.push({
   test: /\.(?:jpg|gif|png|svg)$/,
   loaders: [
-    'url?limit=8000&name=img/[hash].[ext]',
+    'url?limit=8000&name=/img/[hash].[ext]',
     'image-webpack'
   ]
 });

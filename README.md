@@ -43,14 +43,21 @@
 	tests                               # 其他测试文件
 	package.json                        
 	READNE.md  
-	.babelrc                            # babel 配置文件
-       
-    
-node-sass 安装失败问题解决，将node-sass的路径切换到淘宝就可以安装成功
+	.babelrc                            # babel 配置文件    
 
-	SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ npm install     
+## 代码使用
 
-## 
+1.将代码解压到开发目录（这个地方的只能解压到linux下的开发环境，windows开发环境的依赖包没有打包）
+
+2.将`modules.tar.gz`解压到根目录下
+
+3.将`builld\util.js`下的`IPv4`的值改为自己的IP
+
+4.运行`npm start`后，查看页面
+
+
+## webpack 解析
+
 1.编译和解析 JSX、ES6、SCSS
 
 - 使用 `babel` 和 `babel-loader` 编译 `jsx`和`es6`代码

@@ -74,8 +74,8 @@ var config = {
     path: DIST_PATH,
     // chunkhash 不能与 --hot 同时使用
     // see https://github.com/webpack/webpack-dev-server/issues/377
-    filename: __DEV__ ? 'js/[name].js' : 'js/[name].[chunkhash].js',
-    chunkFilename: __DEV__ ? 'js/[name].js' : 'js/[name].[chunkhash].js'
+    filename: __DEV__ ? 'assets/[name].js' : 'assets/[name].[chunkhash].js',
+    chunkFilename: __DEV__ ? 'assets/[name].js' : 'assets/[name].[chunkhash].js'
   },
   module: {},
   resolve: {
@@ -138,11 +138,13 @@ config.postcss = function() {
 
 // 图片路径处理，压缩
 config.module.loaders.push({
-  test: /\.(?:jpg|gif|png|svg)$/,
-  loaders: [
-    'url?limit=8000&name=/img/[hash].[ext]',
-    'image-webpack'
-  ]
+   test: /.*\.(gif|png|jpe?g|svg)$/i,
+   loaders:[
+      //图片小于 8k 就转换为 base64, 或者单独作为文件
+      'url?limit=1000&name=images/[hash:8].[name].[ext]',    
+      // 图片压缩
+      'image-webpack'   
+    ]
 });
 
 // 压缩 js, css
@@ -170,16 +172,19 @@ if (!__DEV__) {
 var HtmlwebpackPlugin = require('html-webpack-plugin');
 config.plugins.push(
   new HtmlwebpackPlugin({
+    favicon: SRC_PATH + '/pages/favicon.ico',
     filename: 'index.html',
     chunks: ['app', 'lib'],
     template: SRC_PATH + '/pages/app.html',
     minify: __DEV__ ? false : {
+      // 删除空白符与换行符
       collapseWhitespace: true,
       collapseInlineTagWhitespace: true,
       removeRedundantAttributes: true,
       removeEmptyAttributes: true,
       removeScriptTypeAttributes: true,
       removeStyleLinkTypeAttributes: true,
+      // 移除HTML中的注释
       removeComments: true
     }
   })

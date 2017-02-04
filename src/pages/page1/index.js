@@ -14,7 +14,7 @@ export default class Page1 extends Component{
     document.body.appendChild(img);
   
     return (
-      <div className="page1"> Page1 haha
+      <div className="page1"> Page1 
           <img src={require('../../img/logo.svg')}  height="20" /> 
           <img src={jpg} height="50" />
           <img src={jpeg} height="50" />

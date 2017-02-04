@@ -18,6 +18,10 @@ var ROOT_PATH = fullPath('../');                       // 项目根路径
 var SRC_PATH = ROOT_PATH + '/src';                     // 项目源码路径
 var DIST_PATH = ROOT_PATH + '/dist';                   // 产出路径
 var NODE_MODULES_PATH =  ROOT_PATH + '/node_modules';  // node_modules 路径
+var commonPath = {
+  staticDir: ROOT_PATH + '/static' // 无需处理的静态资源目录
+};
+
 
 var __DEV__ = process.env.NODE_ENV !== 'production';
 
@@ -63,6 +67,7 @@ alias = Object.assign(alias, {
 
 var config = {
   context: SRC_PATH,
+  commonPath:commonPath,
   entry: {
     app: [SRC_PATH + '/pages/app.js'],
     lib: [
@@ -80,7 +85,7 @@ var config = {
   module: {},
   resolve: {
     root: SRC_PATH,
-    alias: alias
+    alias: alias 
   },
   plugins: [
     new webpack.DefinePlugin({

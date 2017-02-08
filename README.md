@@ -1,6 +1,4 @@
 # react-biolerplate - react 项目模板
-> Date:  2016-12-15
-
 ## 目录	
 - [1 Code Tree](#1code-tree)
 - [2 开发环境](#2开发环境)
@@ -334,8 +332,7 @@ webpack.config.js中的配置：
 - 错误1：系统缺少`libpng.so.0`的库。  解决方法：`yum install */libpng12.so.0 `  `yum install libpng12.x86_64`
 
 - 错误2：是由错误1导致的，因为缺少库，所以在安装image-webpack所依赖的几个模块，如：pngquant,没有产生执行文件，解决方法：重新安装`npm uninstall image-webpack-loader && npm install image-webpack-loader`
- 
-##     
+      
 ## 8.参考文档
 1. [基于 webpack 搭建前端工程基础篇 ](https://github.com/chenbin92/react-redux-webpack-starter/issues/1)  
 2. [如何学习React](https://github.com/petehunt/react-howto/blob/master/README-zh.md#user-content-%E5%AD%A6%E4%B9%A0-react-%E6%9C%AC%E8%BA%AB)    

@@ -69,7 +69,7 @@ var config = {
   context: SRC_PATH,
   commonPath:commonPath,
   entry: {
-    app: [SRC_PATH + '/pages/app.js'],
+    app: [SRC_PATH + '/pages/index.js'],
     lib: [
       'react', 'react-dom', 'react-router',
       'redux', 'react-redux', 'redux-thunk'
@@ -177,10 +177,10 @@ if (!__DEV__) {
 var HtmlwebpackPlugin = require('html-webpack-plugin');
 config.plugins.push(
   new HtmlwebpackPlugin({
-    favicon: SRC_PATH + '/pages/favicon.ico',
+    favicon: SRC_PATH + '/img/favicon.ico',
     filename: 'index.html',
     chunks: ['app', 'lib'],
-    template: SRC_PATH + '/pages/app.html',
+    template: SRC_PATH + '/pages/index.html',
     minify: __DEV__ ? false : {
       // 删除空白符与换行符
       collapseWhitespace: true,

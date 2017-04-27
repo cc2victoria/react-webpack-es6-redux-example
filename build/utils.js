@@ -17,17 +17,23 @@ exports.pickFiles = function(options) {
   }, {}); 
 };
 
+ /**
+ * [获取当前目录的全路径]
+ * @param  {[type]} dir [description]
+ * @return {[type]}     [description
+ */
 exports.fullPath = function(dir) {
   return path.resolve(__dirname, dir);
 };
 
+// 获取 当前系统外网 IPv4 地址
 exports.getIP = function() {
   var os = require('os');
-  var IPv4 = '192.168.1.203';
+  var IPv4 = '127.0.0.1';
   var interfaces = os.networkInterfaces();
   for (var key in interfaces) {
     interfaces[key].some(function(details){
-      if (details.family == 'IPv4' && key == 'en0') {
+      if (details.family == 'IPv4' && key.startsWith('eno')) {
         IPv4 = details.address;
         return true;
       }

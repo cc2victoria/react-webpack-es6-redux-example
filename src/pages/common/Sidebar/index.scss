@@ -1,0 +1,98 @@
+.sidebar{
+    display: block;
+    position: absolute;
+    min-width: 54px;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: #45454C;
+    color: #8D95A2;
+    overflow: hidden;
+    z-index:30;
+    .sidebar-pane{
+        width: 54px;
+        &.isExpanded{
+            width: 200px;
+            .item .itemFlex .dataLabel{
+                display: inline-block;
+            }
+        }
+        .sidebar-expand{
+            position: absolute;
+            left: 18px;
+            top: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #8D95A2;
+        }
+        .items{
+            position: absolute;
+            top: 46px;
+            bottom: 0px;
+            width: 100%;
+            overflow: hidden;
+            font-size: 16px;
+        }
+        .item{
+            display: flex;
+            width: 100%;
+            height: 46px;
+            color:#8D95A2;
+            text-decoration: none;
+            background-color: transparent;
+            .itemFlex{
+                display: flex;
+                padding: 12px 15px 12px 13px;
+                border-left: 2px solid transparent;
+                .navicon{
+                    width: 24px;
+                    height: 24px;   
+                    &.koalaData{
+                        background: url("../../../img/koala_data.svg")  no-repeat ;
+                    }
+                    &.koalaMaterial{
+                        background: url("../../../img/koala_material.svg")  no-repeat;
+                    }
+                    &.koalaWorks{
+                        background: url("../../../img/koala_works.svg")  no-repeat;
+                    }
+                    &.koalaSettings{
+                        background: url("../../../img/koala_settings.svg")  no-repeat;
+                    }
+                }
+                .dataLabel{
+                    display: none;
+                    margin-left: 15px;
+                }
+
+            }
+            &.link-active{
+                background: #3F3E45;
+                .itemFlex{
+                    border-color: #DA552F; 
+                }
+                .itemFlex{ 
+                    .navicon{
+                        &.koalaData{
+                            background: url("../../../img/koala_data_on.svg")  no-repeat;
+                        }
+                        &.koalaMaterial{
+                            background: url("../../../img/koala_material_on.svg")  no-repeat;
+                        }
+                        &.koalaWorks{
+                            background: url("../../../img/koala_works_on.svg")  no-repeat;
+                        }
+                        &.koalaSettings{
+                            background: url("../../../img/koala_settings_on.svg")  no-repeat;
+                        }                    
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+
+
+

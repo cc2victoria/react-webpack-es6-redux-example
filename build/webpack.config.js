@@ -1,9 +1,15 @@
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var WebpackMd5Hash = require('webpack-md5-hash');
 var HashedModuleIdsPlugin = require('./HashedModuleIdsPlugin');
 
-// webpack 命令控制台
+/**
+ * [WebpackMd5Hash 根据文件内容生成 hash
+ */
+var WebpackMd5Hash = require('webpack-md5-hash');
+
+/**
+ * Dashboard webpack 命令控制台
+ */
 var Dashboard = require('webpack-dashboard');
 var DashboardPlugin = require('webpack-dashboard/plugin');
 var dashboard = new Dashboard();
@@ -14,12 +20,12 @@ var utils = require('./utils');
 var fullPath  = utils.fullPath;
 var pickFiles = utils.pickFiles;
 
-var ROOT_PATH = fullPath('../');                       // 项目根路径
-var SRC_PATH = ROOT_PATH + '/src';                     // 项目源码路径
-var DIST_PATH = ROOT_PATH + '/dist';                   // 产出路径
-var NODE_MODULES_PATH =  ROOT_PATH + '/node_modules';  // node_modules 路径
-var commonPath = {
-  staticDir: ROOT_PATH + '/static' // 无需处理的静态资源目录
+var ROOT_PATH  = fullPath('../');                   // 项目根路径
+var SRC_PATH   = ROOT_PATH + '/src';                // 项目源码路径
+var DIST_PATH  = ROOT_PATH + '/dist';               // 产出路径
+var DLL_PATH   = DIST_PATH + '/assets/dll';         // dll 产出路径
+var commonPath = {                                  // 无需处理的静态资源目录
+  staticDir: ROOT_PATH + '/static' 
 };
 
 
@@ -57,30 +63,15 @@ alias = Object.assign(alias, pickFiles({
   pattern: SRC_PATH + '/js/actions/*'
 }));
 
-alias = Object.assign(alias, {
-  'react-router': NODE_MODULES_PATH + '/react-router/lib/index.js',
-  'react-redux': NODE_MODULES_PATH + '/react-redux/lib/index.js',
-  'redux': NODE_MODULES_PATH + '/redux/lib/index.js',
-  'redux-thunk': NODE_MODULES_PATH + '/redux-thunk/lib/index.js'
-});
-
-
 var config = {
   context: SRC_PATH,
   commonPath:commonPath,
   entry: {
-    app: [SRC_PATH + '/pages/index.js'],
-    lib: [
-      'react', 'react-dom', 'react-router',
-      'redux', 'react-redux', 'redux-thunk'
-    ],
+    app: [SRC_PATH + '/pages/index.js']
   },
   output: {
     path: DIST_PATH,
-    // chunkhash 不能与 --hot 同时使用
-    // see https://github.com/webpack/webpack-dev-server/issues/377
     filename: __DEV__ ? 'assets/[name].js' : 'assets/[name].[chunkhash].js',
-    chunkFilename: __DEV__ ? 'assets/[name].js' : 'assets/[name].[chunkhash].js'
   },
   module: {},
   resolve: {
@@ -89,19 +80,17 @@ var config = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      // http://stackoverflow.com/questions/30030031/passing-environment-dependent-variables-in-webpack
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || 'development')
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['lib', 'manifest']
+    new webpack.DllReferencePlugin({
+      context: ROOT_PATH,
+      manifest: require(DLL_PATH + '/vendor-manifest.json'),
+      name: 'vendor_library'
     }),
-    // 使用文件名替换数字作为模块ID
     new webpack.NamedModulesPlugin(),
-    // 使用 hash 作模块 ID，文件名作ID太长了，文件大小剧增
     new HashedModuleIdsPlugin(),
-    // 根据文件内容生成 hash
     new WebpackMd5Hash(),
-    new DashboardPlugin(dashboard.setData)     // webpack 命令控制台
+    new DashboardPlugin(dashboard.setData)
   ]
 };
 
@@ -130,7 +119,7 @@ if (__DEV__) {
     loader: ExtractTextPlugin.extract('style', 'css!postcss!sass')
   });
   config.plugins.push(
-    new ExtractTextPlugin('css/[name].[contenthash].css')
+    new ExtractTextPlugin('styles/[name].[contenthash].css')
   );
 }
 
@@ -146,7 +135,7 @@ config.module.loaders.push({
    test: /.*\.(gif|png|jpe?g|svg)$/i,
    loaders:[
       //图片小于 8k 就转换为 base64, 或者单独作为文件
-      'url?limit=1000&name=images/[hash:8].[name].[ext]',    
+      'url?limit=1000&name=styles/images/[hash:8].[name].[ext]',    
       // 图片压缩
       'image-webpack'   
     ]

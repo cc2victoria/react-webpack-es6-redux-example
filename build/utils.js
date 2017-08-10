@@ -1,7 +1,7 @@
 var glob = require('glob');
 var path = require('path');
 
-/*
+/*  选择文件
 pickFiles({
   id: /([^\/]+).js$/,
   pattern: './src/base/*.js',
@@ -33,7 +33,7 @@ exports.getIP = function() {
   var interfaces = os.networkInterfaces();
   for (var key in interfaces) {
     interfaces[key].some(function(details){
-      if (details.family == 'IPv4' && key.startsWith('eno')) {
+      if (details.family == 'IPv4' && details.address !== '127.0.0.1') {
         IPv4 = details.address;
         return true;
       }

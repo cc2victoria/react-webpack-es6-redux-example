@@ -1,5 +1,5 @@
 /**
- *  ./node_modules/.bin/webpack --config build/webpack.dll.config.js 
+ *  ./node_modules/.bin/webpack --config build/webpack.dll.js 
  *  生成 dll 库，请在每次 vendor 下的文件更改时重新执行这个命令
  */
 

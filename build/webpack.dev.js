@@ -17,7 +17,8 @@ var DeployPlugin = require('./deploy.plugin');
 var utils = require('./utils');
 
 var PORT = 8080;
-var HOST = utils.getIP();
+// var HOST = utils.getIP();
+var HOST = '127.0.0.1'
 
 var args = process.argv;
 var hot = args.indexOf('--hot') > -1;
